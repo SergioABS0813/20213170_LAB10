@@ -4,15 +4,47 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <title>Vista de juego</title>
+        <script>
+            $(document).ready(function() {
+                $("#uploadForm").on("submit", function(e) {
+                    e.preventDefault();
+                    var formData = new FormData(this);
+                    $.ajax({
+                        url: "/upload",
+                        type: "POST",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                    });
+                });
+
+            });
+        </script>
     </head>
     <body>
         <main>
             <div class="container px-4 py-5">
                 <h1 class="pb-2 border-bottom">STF-GAMES: Rompecabezas</h1>
-                <a class="btn btn-primary">Escoger Personaje</a>
             </div>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <div style="display: flex">
+                    <label for="boardSize">Escoge las dimensiones del tablero:</label>
+
+                    <input type="text" id="boardSize" name="boardSize" required>
+
+                    <label>Escoge tu personaje:</label>
+
+                    <input class="btn btn-primary" type="file" id="image" name="image" accept="image/jpeg" required>
+
+                    <button class="btn btn-secondary" type="submit">Iniciar juego</button>
+                </div>
+            </form>
+            <div id="puzzleBoard"></div>
+
         </main>
         <script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
     </body>
 </html>
+
